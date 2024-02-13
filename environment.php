@@ -2,7 +2,7 @@
 
 //set the environment to production after installation
 if (!defined('ENVIRONMENT'))
-    define('ENVIRONMENT', 'production');
+    define('ENVIRONMENT', 'development');
 
 $domain = $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
 $domain = preg_replace('/index.php.*/', '', $domain); //remove everything after index.php
@@ -14,6 +14,6 @@ if (!empty($_SERVER['HTTPS'])) {
 
 //database content
 $hostname = "localhost";
-$username = "d40demo";
-$password = "KMRsn!o68q";
-$database = "d40_flagday";
+$username = "root";
+$password = "root";
+$database = "ci3ready";
