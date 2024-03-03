@@ -18,35 +18,55 @@ class Auth extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	 public function __construct() {
+        parent::__construct();
+
+    }
+
 	public function index()
 	{
-		$this->load->view('login',$data);
+		if($this->aauth->is_loggedin()) redirect('admin', 'refresh');
+		
+		$data = isset($data) ? $data : array();
+		$this->load->view('admin/login',$data);
 	}
 	
 	public function check_login(){
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
  
-	   $this->form_validation->set_rules('username', 'Username', 'trim|required');
-	   $this->form_validation->set_rules('password', 'Password', 'trim|required');
-	   
-	   if($this->form_validation->run() == FALSE)
-	   {
-		 //Field validation failed.  User redirected to login page
-		 $this->load->view('login');
-	   }
-	   else
-	   {
-		   
-		 if($this->aauth->login($this->input->post('username'), $this->input->post('password'))){
-		 	redirect('dashboard', 'refresh');
-		 }else{
-			 $data['error'] = $this->aauth->get_errors_array();
-			 $this->load->view('login',$data);
+
+		
+		$this->form_validation->set_rules('username', 'Username', 'trim|required');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		
+		if($this->form_validation->run() == FALSE)
+		{
+			//Field validation failed.  User redirected to login page
+			$this->load->view('admin/login');
+		}
+		else
+		{
+
+			if($this->aauth->login($this->input->post('username'), $this->input->post('password'),true)){
+				redirect('admin', 'refresh');
+			}else{
+				$data['error'] = $this->aauth->get_errors_array();
+				$this->load->view('admin/login',$data);
 		 }
 	   }
 		
 	}
-	
+
+
+	// ! Dangerous Security Hack ! Remove after use
+	public function example_register(){
+		// $this->aauth->create_user('admin@example.com','admin','admin');
+		// $this->aauth->create_user('user@example.com', 'example_pass', 'OptionalUserName');
+		// $this->aauth->add_member(1,1);
+		// $this->load->view('auth_demo/example_register');
+		// $this->aauth->allow_group('public','admin');
+		echo "User admin admin added <br> Please Remove this function after used ";
+	}
 	
 }
