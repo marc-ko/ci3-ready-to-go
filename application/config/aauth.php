@@ -83,7 +83,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config_aauth = array();
 
 $config_aauth["default"] = array(
- 'no_permission'                  => false,
+ 'no_permission'                  => FALSE,
 
  'admin_group'                    => 'admin',
  'default_group'                  => 'default',
@@ -126,10 +126,10 @@ $config_aauth["default"] = array(
  'max_login_attempt_time_period'  => "5 minutes",
  'remove_successful_attempts'     => true,
 
- 'login_with_name'                => false,
+ 'login_with_name'                => true,
 
- 'email'                          => 'admin@admin.com',
- 'name'                           => 'Emre Akay',
+ 'email'                          => 'ckgkenwong@gmail.com',
+ 'name'                           => 'Admin',
  'email_config'                   => false,
 
  'verification'                   => false,
