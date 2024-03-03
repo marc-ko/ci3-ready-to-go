@@ -25,6 +25,7 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
+		
 		if($this->aauth->is_loggedin()) redirect('admin', 'refresh');
 		
 		$data = isset($data) ? $data : array();
