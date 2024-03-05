@@ -19,7 +19,8 @@ class api extends CI_Controller {
     function updateUserData(){
         $post = $this->input->post();
         if(!isset($post['user_id'])){
-            echo "User id not found";
+            http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'User id not found']);
             exit;
         }
 
@@ -49,7 +50,8 @@ class api extends CI_Controller {
     function getCurrentCount(){
         $get = $this->input->get();
         if(!isset($get['get_id'])){
-            echo "User id not found";
+           http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'User id not found']);
             exit;
         }
         $user_id = $get['get_id'];
@@ -61,7 +63,8 @@ class api extends CI_Controller {
     function registerUser(){
         $post = $this->input->post();
         if(!isset($post['user_id'])||!isset($post['name'])||!isset($post['correct_poses'])||!isset($post['incorrect_poses'])){
-            echo "Data not found";
+            http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'Data not provided']);
             exit;
         }
         
@@ -79,12 +82,15 @@ class api extends CI_Controller {
         }
 
         $data = array(
+            'id' => $post['user_id'],
             'name' => $post['name'],
             'correct_poses' => 0,
             'incorrect_poses' => 0,
             'relate_aauth_id' => $created_user_id,
         );
 
-        $this->db->insert('member_poses',$data);
+        if($this->db->insert('member_poses',$data)){
+            echo "User created";
+        }        
     }
 }
